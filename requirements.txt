@@ -1,5 +1,4 @@
 Flask==2.3.2
-flask-cors==3.0.10
 pandas==2.1.1
-numpy==1.25.2
-orange3==3.35.1
+orange3==3.39.1
+flask-cors==3.1.13
