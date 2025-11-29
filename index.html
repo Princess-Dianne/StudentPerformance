@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Student Pass/Fail Predictor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f0ff, #f0f4f8);
+      padding: 20px 10px;
+      margin: 0;
+    }
+
+    .card {
+      background: #fff;
+      max-width: 650px;
+      width: 95%;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #051f64;
+      text-align: center;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .col {
+      flex: 1 1 200px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 4px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input, select {
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      transition: all 0.2s ease;
+      font-weight: 400;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #2b7cff;
+      box-shadow: 0 0 0 2px rgba(43, 124, 255, 0.2);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    button {
+      display: block; 
+      width: 100%;
+      max-width: 150px;
+      padding: 10px 0; 
+      border-radius: 8px;
+      border: none;
+      background: #051f64; 
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #1653b6;
+    }
+
+    .clear-btn {
+      background: #b00020;
+      color: #fff;
+    }
+
+    .clear-btn:hover {
+      background: #e53946;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1653b6;
+      text-align: center; 
+      word-wrap: break-word;
+    }
+
+    #error {
+      margin-top: 10px;
+      color: #b00020;
+      font-weight: 600;
+      text-align: center;
+      word-wrap: break-word;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .row {
+        flex-direction: column;
+      }
+      button {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Student Grade Evaluator</h1>
+  
+  <form id="predictForm">
+    <div class="row">
+      <div class="col"><label>StudentID</label><input id="StudentID" type="number" required/></div>
+      <div class="col"><label>Age</label><input id="Age" type="number" required/></div>
+      <div class="col"><label>Gender</label>
+        <select id="Gender" required>
+          <option value="" hidden>Select</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col"><label>Ethnicity</label>
+        <select id="Ethnicity" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+      <div class="col"><label>ParentalEducation</label>
+        <select id="ParentalEducation" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+      <div class="col"><label>StudyTimeWeekly</label><input id="StudyTimeWeekly" type="number" step="0.1" required/></div>
+    </div>
+
+    <div class="row">
+      <div class="col"><label>Absences</label><input id="Absences" type="number" required/></div>
+      <div class="col"><label>Tutoring</label>
+        <select id="Tutoring" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+      <div class="col"><label>ParentalSupport</label>
+        <select id="ParentalSupport" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col"><label>Extracurricular</label>
+        <select id="Extracurricular" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+      <div class="col"><label>Sports</label>
+        <select id="Sports" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+      <div class="col"><label>Music</label>
+        <select id="Music" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col"><label>Volunteering</label>
+        <select id="Volunteering" required>
+          <option value="" hidden>Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+      <div class="col"><label>GPA</label><input id="GPA" type="number" step="0.001" required/></div>
+      <div class="col"></div>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:10px; flex-wrap: wrap;">
+      <button type="submit">Predict</button>
+      <button type="button" id="clearBtn" class="clear-btn">Clear</button>
+    </div>
+  </form>
+
+  <div id="output" class="result" style="display:none"></div>
+  <div id="error"></div>
+</div>
+
+<script>
+const apiUrl = "http://127.0.0.1:5000/predict";
+
+function gatherRow() {
+  return {
+    StudentID: parseInt(document.getElementById('StudentID').value),
+    Age: parseInt(document.getElementById('Age').value),
+    Gender: document.getElementById('Gender').value === "Male" ? 1 : 0,
+    Ethnicity: parseInt(document.getElementById('Ethnicity').value),
+    ParentalEducation: parseInt(document.getElementById('ParentalEducation').value),
+    StudyTimeWeekly: parseFloat(document.getElementById('StudyTimeWeekly').value),
+    Absences: parseInt(document.getElementById('Absences').value),
+    Tutoring: parseInt(document.getElementById('Tutoring').value),
+    ParentalSupport: parseInt(document.getElementById('ParentalSupport').value),
+    Extracurricular: parseInt(document.getElementById('Extracurricular').value),
+    Sports: parseInt(document.getElementById('Sports').value),
+    Music: parseInt(document.getElementById('Music').value),
+    Volunteering: parseInt(document.getElementById('Volunteering').value),
+    GPA: parseFloat(document.getElementById('GPA').value)
+  };
+}
+
+document.getElementById('predictForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  document.getElementById('output').style.display = 'none';
+  document.getElementById('error').innerText = '';
+
+  const row = gatherRow();
+
+  try {
+    const resp = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rows: [row] })
+    });
+
+    if (!resp.ok) {
+      const txt = await resp.text();
+      throw new Error('Server error: ' + txt);
+    }
+
+    const json = await resp.json();
+    const pred = (json.prediction && json.prediction[0]) || 'No prediction';
+    const el = document.getElementById('output');
+    el.style.display = 'block';
+    const displayPred = pred.toLowerCase() === 'pass' ? 'Passed' : 'Failed';
+    el.innerText = 'Prediction: ' + displayPred;
+  } catch (err) {
+    document.getElementById('error').innerText = err.message || String(err);
+  }
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  document.getElementById('predictForm').reset();
+  document.getElementById('output').style.display = 'none';
+  document.getElementById('error').innerText = '';
+});
+</script>
+</body>
+</html>
